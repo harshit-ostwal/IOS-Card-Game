@@ -134,8 +134,10 @@ struct ContentView: View {
         else if playerCardId == cpuCardId
         {
             //Increment The Score Of Both Player & CPU By 1
-            playerScore += 1
-            cpuScore += 1
+            playerScore = 0
+            cpuScore = 0
+            playerCard = "back"
+            cpuCard = "back"
             showAlert = true
         }
         else{
