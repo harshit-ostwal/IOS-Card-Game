@@ -61,7 +61,12 @@ struct ContentView: View {
                 .alert(isPresented: $showAlert) {
                     Alert(
                         title: Text("Game Over!!"),
-                        dismissButton: .default(Text("OK"))
+                        dismissButton: .default(Text("OK")){
+                            playerScore = 0
+                            cpuScore = 0
+                            playerCard = "back"
+                            cpuCard = "back"
+                        }
                     )
                 }
 
@@ -134,10 +139,6 @@ struct ContentView: View {
         else if playerCardId == cpuCardId
         {
             //Increment The Score Of Both Player & CPU By 1
-            playerScore = 0
-            cpuScore = 0
-            playerCard = "back"
-            cpuCard = "back"
             showAlert = true
         }
         else{
