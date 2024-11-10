@@ -8,6 +8,16 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var playerCard = "back"
+    @State var cpuCard = "back"
+    
+    @State var playerScore: Int = 0
+    @State var cpuScore: Int = 0
+    
+    @State var showAlert = false
+       
+    
     var body: some View {
         
         ZStack{
@@ -29,12 +39,12 @@ struct ContentView: View {
                     Spacer()
                     
                     //Card1
-                    Image("card2")
+                    Image(playerCard)
                     
                     Spacer()
                     
                     //Card2
-                    Image("card5")
+                    Image(cpuCard)
                 
                     Spacer()
                     
@@ -43,7 +53,18 @@ struct ContentView: View {
                 Spacer()
                 
                 //Button
-                Image("button")
+                Button {
+                   dealCards()
+                } label: {
+                    Image("button")
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("Game Over!!"),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+
                 
                 Spacer()
                 
@@ -58,7 +79,7 @@ struct ContentView: View {
                             .font(.title2)
                             .padding()
                             .foregroundColor(.white)
-                        Text("0")
+                        Text(String(playerScore))
                             .font(.title3)
                             .foregroundColor(.white)
                     }
@@ -72,7 +93,7 @@ struct ContentView: View {
                             .font(.title2)
                             .padding()
                             .foregroundColor(.white)
-                        Text("0")
+                        Text(String(cpuScore))
                             .foregroundColor(.white)
                             .font(.title3)
                     }
@@ -87,6 +108,41 @@ struct ContentView: View {
             
         }
         
+    }
+    
+    func dealCards(){
+        let playerCardId:Int = Int.random(in: 2...14)
+        let cpuCardId:Int = Int.random(in: 2...14)
+        
+        //Randomize The Player's Cards
+        playerCard = "card" + String(playerCardId)
+        
+        //Randomize The CPU's Cards
+        cpuCard = "card" + String(cpuCardId)
+        
+        //Update The Score's
+        if(playerCardId > cpuCardId)
+        {
+            //Increment The Score Of Player Card By 1
+            playerScore += 1
+        }
+        else if playerCardId < cpuCardId
+        {
+            //Increment The Score Of CPU Card By 1
+            cpuScore += 1
+        }
+        else if playerCardId == cpuCardId
+        {
+            //Increment The Score Of Both Player & CPU By 1
+            playerScore += 1
+            cpuScore += 1
+            showAlert = true
+        }
+        else{
+            //Make The Default Score Of Both Player & CPU Equal To 0
+            playerScore = 0
+            cpuScore = 0
+        }
     }
 }
 
